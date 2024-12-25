@@ -10,18 +10,18 @@ export class HomePage {
 
 
     async navigateToHomePage() {
-        await this.base.goto("https://www.youtube.com/");
+        await this.base.goto("https://www.nasdaq.com/");
 
     }
 
-    async searchYoutube(Search:string) 
+    async searchGoogleFinance(Search:string) 
     {
-     await this.page.fill(`//input[@class="ytSearchboxComponentInput yt-searchbox-input title"]`,Search)
-     await this.page.press('//button[@aria-label="Search" and @title="Search"][1]', 'Enter');
+     await this.page.fill(`//input[@placeholder="Search for symbols, news or products" and @class="primary-nav__search primary-nav__search--ai" and @type="text"]`,Search)
+     await this.page.press(`//input[@placeholder="Search for symbols, news or products" and @class="primary-nav__search primary-nav__search--ai" and @type="text"]`, 'Enter');
     }
 
     async Validate(searchValidation:string) {
-        const validXpath = this.page.locator(`//yt-formatted-string[contains(text(), "${searchValidation}")]`)
+        const validXpath = this.page.locator(`//div[(text() = "${searchValidation}")]`)
         await expect(validXpath).toBeVisible();
     }
 }
