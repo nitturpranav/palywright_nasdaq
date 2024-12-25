@@ -8,29 +8,20 @@ export class HomePage {
         this.base = new PlaywrightWrapper(page);
     }
 
-    public Elements = {
-        firstNameBox: `//input[@id="firstName"]`,
-        lastNameBox: `//input[@id="lastName"]`,
-        emailBox: `//input[@id="email"]`,
-        checkBox: `//span[@class="checkmark"]`,
-        submitBox: `//button[text()="Continue with email"]`,
-        validateBox: `//div[text()="Surprise! You've got a 14-day PRO Plan trial!"]`,
-    };
 
     async navigateToHomePage() {
-        await this.base.goto("https://app.leadsbridge.com/signup");
+        await this.base.goto("https://www.youtube.com/");
+
     }
 
-    async fillOutForm(firstName: string, lastName: string, email: string) {
-        await this.page.locator(this.Elements.firstNameBox).fill(firstName);
-        await this.page.locator(this.Elements.lastNameBox).fill(lastName);
-        await this.page.locator(this.Elements.emailBox).fill(email);
-        await this.page.locator(this.Elements.checkBox).click();
-        await this.page.locator(this.Elements.submitBox).click();
+    async searchYoutube(Search:string) 
+    {
+     await this.page.fill(`//input[@class="ytSearchboxComponentInput yt-searchbox-input title"]`,Search)
+     await this.page.press('//button[@aria-label="Search" and @title="Search"][1]', 'Enter');
     }
 
-    async Validate() {
-        const successMessage = this.page.locator(this.Elements.validateBox);
-        await expect(successMessage).toBeVisible();
+    async Validate(searchValidation:string) {
+        const validXpath = this.page.locator(`//yt-formatted-string[contains(text(), "${searchValidation}")]`)
+        await expect(validXpath).toBeVisible();
     }
 }

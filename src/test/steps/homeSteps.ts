@@ -1,20 +1,18 @@
-import { Given,When,Then } from "@cucumber/cucumber";
+import { Given, When, Then } from "@cucumber/cucumber";
 import { HomePage } from "../../pages/homePage";
 import { fixture } from "../../hooks/pageFixture";
 
-let homePage : HomePage;
+let homePage: HomePage;
 
-Given(`user navigates to Leads Bridge Home Page`,async function()
-{
-    homePage = new HomePage(fixture.page)
+Given(`User navigates to Youtube Page`, async function () {
+    homePage = new HomePage(fixture.page);
     await homePage.navigateToHomePage();
-   })
+});
 
-When(`User should be able to enter  {string},{string},{string}`,async function(firstName:string,lastName:string,email:string)
-{
-    await homePage.fillOutForm(firstName,lastName,email);
-})
+When(`User searches for {string}`, async function (search: string) {
+    await homePage.searchYoutube(search);
+});
 
-Then(`Validation of text`,async function(){
-    await homePage.Validate();
-})
+Then(`Validation of Content {string}`, async function (searchValidation: string) {
+    await homePage.Validate(searchValidation);
+});
